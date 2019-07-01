@@ -35,6 +35,7 @@ export default class Login extends Component {
   }
 
   handleSubmit = () => {
+    console.log("submit")
     axios
       .post(`${BASE_URL}/login`, {
         email: this.state.email,
@@ -47,6 +48,8 @@ export default class Login extends Component {
           this.props.navigation.navigate("GroupChat", {
             user: response.data.user
           });
+        }else{
+          alert("Username or password is wrong")
         }
       })
       .catch(function(error) {

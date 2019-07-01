@@ -20,6 +20,9 @@ import {
 
 import Spinner from 'react-native-loading-spinner-overlay';
 
+import moment from 'moment';
+import TimeAgo from 'react-native-timeago';
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import Foundation from "react-native-vector-icons/Foundation";
@@ -54,6 +57,7 @@ export default class GroupChat extends Component {
 
       loading: false
     };
+    
   }
 
   componentDidMount() {
@@ -204,6 +208,7 @@ export default class GroupChat extends Component {
           textStyle={styles.spinnerTextStyle}
         />
         {
+          
           !this.state.headerChange ?
             <Header style={{ backgroundColor: "#FFFFFF" }}>
               <Left 
@@ -259,8 +264,9 @@ export default class GroupChat extends Component {
         <Content style={{ backgroundColor: "black" }}>
           <FlatList
             data={this.state.messages}
-              
+            
             renderItem={({item}) => (
+              
               this.state.user.id == item.id_user ?
               <TouchableHighlight 
                 activeOpacity={0.6}
@@ -286,7 +292,11 @@ export default class GroupChat extends Component {
                       }}
                     >
                       <Text>{item.message}</Text>
-                      <Text style={{fontSize: 8, textAlign: 'right', marginTop: 2}}>12:00</Text>
+                      <Text style={{fontSize: 8, textAlign: 'right', marginTop: 2}}>
+                        <Text style={{ textAlign: "right", fontSize: 10 }}>
+                          <TimeAgo time={item.created_at} />
+                        </Text>
+                      </Text>
                     </View> 
                   </View>
                 </View>
@@ -303,16 +313,18 @@ export default class GroupChat extends Component {
                         borderRadius: 5
                       }}
                     >
-                      <Text style={{fontSize: 10, color: "#18ABFB"}}>{item.email}</Text>
+                      <Text style={{fontSize: 10, color: "#18ABFB"}}>{item.name}</Text>
                       <Text style={{marginTop: 5}}>{item.message}</Text>
-                      <Text style={{ textAlign: "right", fontSize: 10 }}>12:00</Text>
+                      <Text style={{ textAlign: "right", fontSize: 10 }}>
+                        <TimeAgo time={item.created_at} />
+                      </Text>
                     </View>
                   </View>
                 </View>
               </TouchableOpacity>
             )} 
+            keyExtractor={item => item.id_message}
           >
-
           </FlatList>
         </Content>
 
